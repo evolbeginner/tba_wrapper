@@ -20,7 +20,9 @@ while [ $# -gt 0 ]; do
 			shift
 			;;
 		--genome_fasta)
-			genome_fastas=(${genome_fastas[@]} $2)
+			for genome_fasta in `echo $2|sed 's/,/ /g'`; do
+				genome_fastas=(${genome_fastas[@]} $genome_fasta)
+			done
 			shift
 			;;
 		--no_split_genome)
@@ -35,7 +37,9 @@ while [ $# -gt 0 ]; do
 			shift
 			;;
 		--lastz_dir)
-			lastz_dirs=(${lastz_dirs[@]} $2)
+			for lastz_dir in `echo $2|sed 's/,/ /g'`; do
+				lastz_dirs=(${lastz_dirs[@]} $lastz_dir)
+			done
 			shift
 			;;
 		--force)
@@ -49,7 +53,7 @@ while [ $# -gt 0 ]; do
 done
 
 
-source scripts/set_EV.sh 
+source $home_dir/scripts/set_EV.sh 
 if [ -z $outdir ]; then
 	echo "outdir has to be given! Exiting ......"
 	exit 1
